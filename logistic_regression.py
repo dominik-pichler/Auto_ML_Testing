@@ -65,7 +65,6 @@ def run_log_regression(experiment_id,
 
     preprocessor = ColumnTransformer(
         transformers=[
-            # TODO: Insert Custom Project Logic
             ("num", FunctionTransformer(log_transform), slice(0, 1),),
             ("imputer", SimpleImputer(strategy="mean"), slice(0, -1)),
         ],

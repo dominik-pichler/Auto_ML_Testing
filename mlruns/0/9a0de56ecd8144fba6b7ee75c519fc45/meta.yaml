@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/dominikpichler/Documents/Git/Auto_ML_Testing/mlruns/0/9a0de56ecd8144fba6b7ee75c519fc45/artifacts
+end_time: 1715374530696
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9a0de56ecd8144fba6b7ee75c519fc45
+run_name: upbeat-hound-759
+run_uuid: 9a0de56ecd8144fba6b7ee75c519fc45
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715374518851
+status: 3
+tags: []
+user_id: dominikpichler

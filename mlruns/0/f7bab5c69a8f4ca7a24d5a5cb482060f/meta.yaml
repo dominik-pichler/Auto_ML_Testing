@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/dominikpichler/Documents/Git/Auto_ML_Testing/mlruns/0/f7bab5c69a8f4ca7a24d5a5cb482060f/artifacts
+end_time: 1715375317495
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f7bab5c69a8f4ca7a24d5a5cb482060f
+run_name: able-robin-576
+run_uuid: f7bab5c69a8f4ca7a24d5a5cb482060f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715375317483
+status: 3
+tags: []
+user_id: dominikpichler

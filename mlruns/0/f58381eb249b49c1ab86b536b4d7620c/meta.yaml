@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/dominikpichler/Documents/Git/Auto_ML_Testing/mlruns/0/f58381eb249b49c1ab86b536b4d7620c/artifacts
+end_time: 1715374624918
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f58381eb249b49c1ab86b536b4d7620c
+run_name: awesome-tern-324
+run_uuid: f58381eb249b49c1ab86b536b4d7620c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715374624909
+status: 3
+tags: []
+user_id: dominikpichler

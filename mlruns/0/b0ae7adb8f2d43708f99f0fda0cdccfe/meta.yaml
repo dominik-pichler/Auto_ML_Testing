@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/dominikpichler/Documents/Git/Auto_ML_Testing/mlruns/0/b0ae7adb8f2d43708f99f0fda0cdccfe/artifacts
+end_time: 1715375535087
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b0ae7adb8f2d43708f99f0fda0cdccfe
+run_name: dazzling-vole-562
+run_uuid: b0ae7adb8f2d43708f99f0fda0cdccfe
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715375535060
+status: 3
+tags: []
+user_id: dominikpichler

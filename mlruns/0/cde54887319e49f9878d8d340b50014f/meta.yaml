@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/dominikpichler/Documents/Git/Auto_ML_Testing/mlruns/0/cde54887319e49f9878d8d340b50014f/artifacts
+end_time: 1715374744323
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cde54887319e49f9878d8d340b50014f
+run_name: delightful-horse-540
+run_uuid: cde54887319e49f9878d8d340b50014f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715374744313
+status: 3
+tags: []
+user_id: dominikpichler

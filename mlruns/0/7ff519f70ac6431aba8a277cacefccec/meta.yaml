@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/dominikpichler/Documents/Git/Auto_ML_Testing/mlruns/0/7ff519f70ac6431aba8a277cacefccec/artifacts
+end_time: 1715375284470
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7ff519f70ac6431aba8a277cacefccec
+run_name: delicate-gnu-429
+run_uuid: 7ff519f70ac6431aba8a277cacefccec
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715375284459
+status: 3
+tags: []
+user_id: dominikpichler
