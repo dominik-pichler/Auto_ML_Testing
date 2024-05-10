@@ -1,0 +1,15 @@
+{
+  "data_paths": {
+    "train_x": "path/to/train_x.csv",
+    "train_y": "path/to/train_y.csv",
+    "test_x": "path/to/test_x.csv",
+    "test_y": "path/to/test_y.csv"
+  },
+  "preprocessing_steps": [],
+  "model": null,
+  "HPOptimizer_type": null,
+  "param_grid": [],
+  "tracking_uri": "http://127.0.0.1:5000",
+  "experiment_description": "",
+  "experiment_name": "Description"
+}
