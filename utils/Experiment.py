@@ -13,10 +13,12 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 import warnings
-warnings.filterwarnings("ignore") #TODO: Remove before release
+
+warnings.filterwarnings("ignore")  # TODO: Remove before release
+
 
 class Experiment:
-    def __init__(self, path_config_json):
+    def __init__(self, path_config_json,experiment_id):
 
         try:
             with open(path_config_json, "r") as f:
@@ -41,7 +43,7 @@ class Experiment:
         self.tracking_uri = config_data["tracking_uri"]
         self.experiment_description = config_data["experiment_description"]
         self.experiment_name = config_data["experiment_name"]
-        self.experiment_id = config_data["experiment_id"]
+        self.experiment_id = experiment_id
 
     def _get_classifier(self):
         # Dictionary mapping model names to scikit-learn classes
@@ -51,7 +53,8 @@ class Experiment:
             'svm': SVC,
             'random_forest': RandomForestClassifier,
             'decision_tree': DecisionTreeClassifier,
-            # Add more mappings as needed
+            'KNeighborsRegressor': KNeighborsRegressor
+            # TODO: Add more mappings as needed
         }
 
         # Get the classifier class from the dictionary
@@ -85,57 +88,30 @@ class Experiment:
 
             # Create a Pipeline
             pipeline = Pipeline([
-                # ("preprocessor", self.setup_preProcessor()),
+                # ("preprocessor", self.setup_preProcessor()), #TODO: Include Preprocessing in Pipeline
                 ('classifier', self.classifier)
             ])
-
-            search = GridSearchCV(pipeline,
-                                  param_grid=self.param_grid,
-                                  cv=3,
-                                  verbose=True
-                                  )
 
             match self.HPOptimizer_type:
                 case 'GridSearch':
                     search = GridSearchCV(pipeline,
                                           param_grid=self.param_grid,
                                           cv=3,
-                                          verbose=True
+                                          verbose=0
                                           )
-                #TODO: Implement more searchers
+                # TODO: Implement more searchers
                 case _:
                     raise ValueError(f"Searcher '{self.model}' is not supported.")
 
             search.fit(self.train_x, self.train_y)
 
-            print("Best parameter (CV score=%0.3f):" % search.best_score_)
-
-            # Extracting the Hyperparamter for logging from the JSON
-
             for key in self.param_grid[0].keys():
-                log_param(f"__Hyperparamter_{key}",search.best_params_[key])
+                log_param(f"__Hyperparamter_{key}", search.best_params_[key])
 
-            #log_param("__Hyperparam__n_neighbors", search.best_params_["classifier__penalty"])
-            #log_param("__Hyperparam__weights", search.best_params_["classifier__C"])
-            #log_param("__Hyperparam__p", search.best_params_["classifier__solver"])
-
-            """
-            for param in self.param_grid:
-                log_param(str(param["name"]), search.best_params_[str(param["name"])])
-            """
-            print(search.best_params_)
-            # print(search.best_params_["classifier"])
             y_pred = search.predict(self.test_x)
 
             # TODO: Add way to also parametrise the metrics  (CAUTION: Right now it will fail for Classification
             log_metric("R2", r2_score(y_true=self.test_y, y_pred=y_pred))
-
             log_metric("MSE", mean_squared_error(y_true=self.test_y, y_pred=y_pred))
             log_metric("MAPE", mean_absolute_percentage_error(y_true=self.test_y, y_pred=y_pred), )
 
-
-if __name__ == '__main__':
-    # Setup Experiment:
-
-    experiment = Experiment("templates/template_config.json")
-    experiment.run_experiment()
