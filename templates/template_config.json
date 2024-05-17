@@ -1,16 +1,11 @@
 {
   "data_paths": {
-    "train_x": "path/to/train_x.csv",
-    "train_y": "path/to/train_y.csv",
-    "test_x": "path/to/test_x.csv",
-    "test_y": "path/to/test_y.csv"
+    "train_x": "input/data/abalone/abalone_train_x.csv",
+    "train_y": "input/data/abalone/abalone_train_y.csv",
+    "test_x": "input/data/abalone/abalone_test_x.csv",
+    "test_y": "input/data/abalone/abalone_test_y.csv"
   },
   "preprocessing_steps": [
-    {
-      "name": "scaler",
-      "type": "StandardScaler",
-      "params": {}
-    },
     {
       "name": "classifier",
       "type": "logistic_regression",
@@ -18,12 +13,12 @@
     }
   ],
   "model": "logistic_regression",
-  "HPOptimizer_type": "GridSearchCV",
+  "HPOptimizer_type": "GridSearch",
   "param_grid":  {
-            "classifier__n_neighbors": [3, 5, 7, 9, 11],
-            "classifier__weights": ["uniform", "distance"],
-            "classifier__p": [1, 2]
-        },
+        "classifier__penalty": ["l1", "l2"],
+        "classifier__C": [1,2,3,4,5,6,7,8,9],
+        "classifier__solver": ["liblinear", "saga"]
+    },
   "pipeline": [
     {
       "name": "scaler",
@@ -38,5 +33,6 @@
   ],
   "tracking_uri": "http://127.0.0.1:5000",
   "experiment_description": "",
-  "experiment_name": "Description"
+  "experiment_name": "Description",
+  "experiment_id":"777620538410713530"
 }
