@@ -1,15 +1,16 @@
-import pandas as pd
-from mlflow import (create_experiment, get_experiment_by_name, log_metric, log_param, set_tracking_uri, start_run)
+from mlflow import (log_metric, log_param)
 import psutil
 import json
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import FunctionTransformer
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, train_test_split
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
-import utils.custom_preProcessing
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.pipeline import Pipeline
-
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 
 class Experiment:
@@ -27,7 +28,10 @@ class Experiment:
         self.test_x = config_data["data_paths"]["test_y"]
 
         self.preprocessing_steps = config_data["preprocessing_steps"]
+
         self.model = config_data["model"]
+        self.classifier = self._get_classifier()
+
         self.HPOptimizer_type = config_data["HPOptimizer_type"]
         self.param_grid = [config_data["param_grid"]]
         self.pipeline = config_data["pipeline"]
@@ -36,6 +40,25 @@ class Experiment:
         self.experiment_description = config_data["experiment_description"]
         self.experiment_name = config_data["experiment_name"]
 
+    def _get_classifier(self):
+        # Dictionary mapping model names to scikit-learn classes
+        model_dict = {
+            'kNN': KNeighborsClassifier,
+            'logistic_regression': LogisticRegression,
+            'svm': SVC,
+            'random_forest': RandomForestClassifier,
+            'decision_tree': DecisionTreeClassifier,
+            # Add more mappings as needed
+        }
+
+        # Get the classifier class from the dictionary
+        classifier_class = model_dict.get(self.model)
+
+        if classifier_class is None:
+            raise ValueError(f"Model '{self.model}' is not supported.")
+
+        # Initialize and return the classifier instance
+        return classifier_class()
     def setup_preProcessor(self):
         preprocessor_transformers = []
 
