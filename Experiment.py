@@ -71,9 +71,9 @@ class Experiment:
 
     def run_experiment(self):
         # General logging for reproducability
-        log_param("cpu_model", psutil.cpu_freq())
-        log_param("cpu_count", psutil.cpu_count())
-        log_param("ram_total_gb", round(psutil.virtual_memory().total / (1024.0 ** 3), 2))
+        log_param("_cpu_model", psutil.cpu_freq())
+        log_param("_cpu_count", psutil.cpu_count())
+        log_param("_ram_total_gb", round(psutil.virtual_memory().total / (1024.0 ** 3), 2))
 
         # Log system metrics during training
         cpu_percent = psutil.cpu_percent()
@@ -82,20 +82,13 @@ class Experiment:
         log_metric("cpu_percent", cpu_percent)
         log_metric("ram_percent", ram_percent)
 
-        # Define classifier with default parameters
-        match self.model:
-            case 'kNN_Custom':
-                classifer = None #TODO: here
-            case 'kNN_benchmark':
-                classifier = KNeighborsRegressor()
-            case _ :
-                raise Exception
+
 
 
         # Create a Pipeline
         pipeline = Pipeline([
             ("preprocessor", self.setup_preProcessor()),
-            ('classifier', classifier)
+            ('classifier', self.classifier)
         ])
 
         match self.HPOptimizer_type:
