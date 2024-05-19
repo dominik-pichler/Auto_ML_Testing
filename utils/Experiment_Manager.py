@@ -1,5 +1,5 @@
 from mlflow import set_tracking_uri, create_experiment, get_experiment_by_name
-from utils.Experiment import Experiment
+from Auto_ML_Testing.utils.Experiment import Experiment
 from tqdm import tqdm
 
 # Function to create a colored string
@@ -21,11 +21,11 @@ class Experiment_Manager:
                  experiment_creator="Admin"):
         self.experiment_name = experiment_name
         self.experiment_description = experiment_description
-        self.experiment_id = (
-            create_experiment(experiment_name, experiment_description)
-            if get_experiment_by_name(experiment_name) is None
-            else get_experiment_by_name(experiment_name).experiment_id
-        )
+
+        self.experiment_id = get_experiment_by_name(experiment_name)
+        if self.experiment_id is None:
+            self.experiment_id = create_experiment(experiment_name)
+
         self.experiment_creator = experiment_creator
         self.experiments = []
 
