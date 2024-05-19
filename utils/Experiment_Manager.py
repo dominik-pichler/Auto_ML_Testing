@@ -1,6 +1,7 @@
 from mlflow import set_tracking_uri, create_experiment, get_experiment_by_name
 from Auto_ML_Testing.utils.Experiment import Experiment
 from tqdm import tqdm
+from uuid import uuid4
 
 # Function to create a colored string
 # ANSI escape codes for colors
@@ -18,13 +19,24 @@ def colored_text(color, text):
 class Experiment_Manager:
     def __init__(self, experiment_name: str,
                  experiment_description="No description",
-                 experiment_creator="Admin"):
-        self.experiment_name = experiment_name
+                 experiment_creator="Admin",
+                 add_UID=True):
+
         self.experiment_description = experiment_description
 
-        self.experiment_id = get_experiment_by_name(experiment_name)
-        if self.experiment_id is None:
-            self.experiment_id = create_experiment(experiment_name)
+        if add_UID:
+            # TODO: Not ideal, should be improved in the future
+            self.experiment_name = experiment_name + "_" + str(uuid4())[:8]
+            self.experiment_id = create_experiment(self.experiment_name)
+
+
+        else:
+            self.experiment_name = experiment_name
+
+            if get_experiment_by_name(experiment_name) is None:
+                self.experiment_id = create_experiment(experiment_name)
+            else:
+                self.experiment_id = get_experiment_by_name(experiment_name)['experiment_id']
 
         self.experiment_creator = experiment_creator
         self.experiments = []

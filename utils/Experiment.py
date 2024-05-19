@@ -45,7 +45,7 @@ class Experiment:
         self.experiment_name = config_data["experiment_name"]
         self.experiment_id = experiment_id
 
-    def _get_classifier(self):
+    def _get_classifier(self, **kwargs):
         # Dictionary mapping model names to scikit-learn classes
         model_dict = {
             'kNN': KNeighborsClassifier,
@@ -65,7 +65,7 @@ class Experiment:
             raise ValueError(f"Model '{self.model}' is not supported.")
 
         # Initialize and return the classifier instance
-        return classifier_class()
+        return classifier_class(**kwargs)
 
     def setup_preProcessor(self):
         preprocessor_transformers = []
@@ -106,12 +106,11 @@ class Experiment:
             search.fit(self.train_x, self.train_y)
 
             for key in self.param_grid[0].keys():
-                log_param(f"__Hyperparamter_{key}", search.best_params_[key])
-
+                log_param(f"_Hyperparamter_{key}", search.best_params_[key])
+            log_param("_HPOtimizer_type",self.HPOptimizer_type)
             y_pred = search.predict(self.test_x)
 
             # TODO: Add way to also parametrise the metrics  (CAUTION: Right now it will fail for Classification
             log_metric("R2", r2_score(y_true=self.test_y, y_pred=y_pred))
             log_metric("MSE", mean_squared_error(y_true=self.test_y, y_pred=y_pred))
             log_metric("MAPE", mean_absolute_percentage_error(y_true=self.test_y, y_pred=y_pred), )
-
