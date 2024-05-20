@@ -12,6 +12,8 @@ BLUE = "\033[94m"
 MAGENTA = "\033[95m"
 CYAN = "\033[96m"
 RESET = "\033[0m"
+
+
 def colored_text(color, text):
     return f"{color}{text}{GREEN}"
 
@@ -36,7 +38,7 @@ class Experiment_Manager:
             if get_experiment_by_name(experiment_name) is None:
                 self.experiment_id = create_experiment(experiment_name)
             else:
-                self.experiment_id = get_experiment_by_name(experiment_name)['experiment_id']
+                self.experiment_id = dict(get_experiment_by_name(experiment_name))['experiment_id']
 
         self.experiment_creator = experiment_creator
         self.experiments = []
@@ -50,6 +52,3 @@ class Experiment_Manager:
         for experiment in tqdm(self.experiments, desc=colored_text(GREEN, "Experimenting in progress")):
             experiment.run_experiment()
         print("All your experiments have been successfully executed. The results can be found in the MLFlow UI")
-
-
-

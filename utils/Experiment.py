@@ -13,6 +13,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 import warnings
+from ..custom_implementations.custom_models.custom_kNN import custom_kNN
 
 warnings.filterwarnings("ignore")  # TODO: Remove before release
 
@@ -45,7 +46,7 @@ class Experiment:
         self.experiment_name = config_data["experiment_name"]
         self.experiment_id = experiment_id
 
-    def _get_classifier(self, **kwargs):
+    def _get_classifier(self):
         # Dictionary mapping model names to scikit-learn classes
         model_dict = {
             'kNN': KNeighborsClassifier,
@@ -53,19 +54,24 @@ class Experiment:
             'svm': SVC,
             'random_forest': RandomForestClassifier,
             'decision_tree': DecisionTreeClassifier,
-            'KNeighborsRegressor': KNeighborsRegressor
+            'KNeighborsRegressor': KNeighborsRegressor,
+            'custom_kNN': custom_kNN  # Use custom kNN class directly
             # TODO: Add more mappings as needed
         }
 
         # Get the classifier class from the dictionary
         classifier_class = model_dict.get(self.model)
-        # self.param_grid[0].update({'classifier': model_dict.get(self.model)})
-
         if classifier_class is None:
             raise ValueError(f"Model '{self.model}' is not supported.")
 
         # Initialize and return the classifier instance
-        return classifier_class(**kwargs)
+        if self.model == 'custom_kNN':
+            # Extract custom kNN parameters from param_grid
+            custom_kNN_params = {param.split('__')[1]: value for param, value in self.param_grid[0].items() if
+                                 'classifier__' in param}
+            return classifier_class(**custom_kNN_params)
+        else:
+            return classifier_class()
 
     def setup_preProcessor(self):
         preprocessor_transformers = []
