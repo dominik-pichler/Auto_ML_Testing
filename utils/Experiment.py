@@ -55,7 +55,8 @@ class Experiment:
             'random_forest': RandomForestClassifier,
             'decision_tree': DecisionTreeClassifier,
             'KNeighborsRegressor': KNeighborsRegressor,
-            'custom_kNN': custom_kNN  # Use custom kNN class directly
+            'custom_kNN': custom_kNN,  # Use custom kNN class directly
+            'gradient_descent': SGDRegressor
             # TODO: Add more mappings as needed
         }
 
