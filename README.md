@@ -1,4 +1,6 @@
 # Auto_ML_Testing
 
-Tool to easily test and evaluate multiple different ML Algorithms, Hyperparameters,Datasets, ... against each other. 
-Readme will follow soon
+You're looking for a simple solution to test many different machine learning algorithms and hyperparamters against each other?
+Performance Evaluation is important to you and you care about reproduceablitiy at scale?
+
+Then this tool might help you.
