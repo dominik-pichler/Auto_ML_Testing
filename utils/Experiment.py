@@ -13,7 +13,13 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 import warnings
-from ..custom_implementations.custom_models.custom_kNN import custom_kNN
+
+from Auto_ML_Testing.custom_implementations.custom_models.custom_GD import custom_GD
+from Auto_ML_Testing.custom_implementations.custom_models.custom_kNN import custom_kNN
+
+
+#from .. custom_implementations.custom_models.custom_kNN import custom_kNN
+#from ..custom_implementations.custom_models.custom_GD import custom_GD
 
 warnings.filterwarnings("ignore")  # TODO: Remove before release
 
@@ -56,7 +62,7 @@ class Experiment:
             'decision_tree': DecisionTreeClassifier,
             'KNeighborsRegressor': KNeighborsRegressor,
             'custom_kNN': custom_kNN,  # Use custom kNN class directly
-            'gradient_descent': SGDRegressor
+            'custom_GD': custom_GD
             # TODO: Add more mappings as needed
         }
 
@@ -71,6 +77,12 @@ class Experiment:
             custom_kNN_params = {param.split('__')[1]: value for param, value in self.param_grid[0].items() if
                                  'classifier__' in param}
             return classifier_class(**custom_kNN_params)
+
+        if self.model == 'custom_GD':
+            # Extract custom kNN parameters from param_grid
+            custom_GD_params = {param.split('__')[1]: value for param, value in self.param_grid[0].items() if
+                                 'classifier__' in param}
+            return classifier_class(**custom_GD_params)
         else:
             return classifier_class()
 
