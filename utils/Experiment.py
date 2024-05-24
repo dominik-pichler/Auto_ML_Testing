@@ -6,6 +6,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.linear_model import SGDRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
@@ -57,6 +58,7 @@ class Experiment:
         model_dict = {
             'kNN': KNeighborsClassifier,
             'logistic_regression': LogisticRegression,
+            'GD_Reg': SGDRegressor,
             'svm': SVC,
             'random_forest': RandomForestClassifier,
             'decision_tree': DecisionTreeClassifier,
