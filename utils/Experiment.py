@@ -3,7 +3,7 @@ from mlflow import (log_metric, log_param, start_run)
 import psutil
 import json
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from sklearn.model_selection import GridSearchCV, PredefinedSplit
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.linear_model import SGDRegressor
@@ -11,16 +11,13 @@ from sklearn.pipeline import Pipeline
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import DecisionTreeClassifier
 import warnings
 
 from Auto_ML_Testing.custom_implementations.custom_models.custom_GD import custom_GD
 from Auto_ML_Testing.custom_implementations.custom_models.custom_kNN import custom_kNN
 
-
-#from .. custom_implementations.custom_models.custom_kNN import custom_kNN
-#from ..custom_implementations.custom_models.custom_GD import custom_GD
 
 warnings.filterwarnings("ignore")  # TODO: Remove before release
 
@@ -60,7 +57,7 @@ class Experiment:
             'logistic_regression': LogisticRegression,
             'GD_Reg': SGDRegressor,
             'svm': SVC,
-            'random_forest': RandomForestClassifier,
+            'random_forest': RandomForestRegressor,
             'decision_tree': DecisionTreeClassifier,
             'KNeighborsRegressor': KNeighborsRegressor,
             'custom_kNN': custom_kNN,  # Use custom kNN class directly
@@ -113,11 +110,12 @@ class Experiment:
                 ('classifier', self.classifier)
             ])
 
+
             match self.HPOptimizer_type:
                 case 'GridSearch':
                     search = GridSearchCV(pipeline,
                                           param_grid=self.param_grid,
-                                          cv=3,
+                                          cv=[(slice(None), slice(None))],
                                           verbose=0
                                           )
                 # TODO: Implement more searchers

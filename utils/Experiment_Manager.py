@@ -54,10 +54,10 @@ class Experiment_Manager:
 
     @memory_profiler.profile(stream=fp)
     def run_experiments(self):
-        log_name = f"========== MEMORY_PROFILE FOR {str(self.experiments)} ========== \n "
+        log_name = f"\n========== MEMORY_PROFILE FOR {str(self.experiment_name)} ========== \n "
         fp.write(log_name)
 
-        print(f"Your {len(self.experiments)} experiments in the {self.experiment_name}-context will now be executed")
+        print(f"\nYour {len(self.experiments)} experiments in the {self.experiment_name}-context will now be executed")
         for experiment in tqdm(self.experiments, desc=colored_text(GREEN, "Experimenting in progress")):
             experiment.run_experiment()
         print("All your experiments have been successfully executed. The results can be found in the MLFlow UI")
